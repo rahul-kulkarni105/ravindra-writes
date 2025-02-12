@@ -8,6 +8,7 @@ import articleData from "~/data/articleData.json";
 export const loader = async ({ params }: any) => {
   // Fetch the article from your database using params.slug
   console.log('params', params);
+  console.log('test');
 
   const translatedTitle = await translateText(articleData.title, "mr", "en");
   const translatedContent = await translateText(articleData.content, "mr", "en");
