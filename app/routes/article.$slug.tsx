@@ -1,8 +1,7 @@
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import ArticleView from "~/components/ArticleView";
-import { translateText } from "~/utils/translate.server";
-import articleData from "~/data/articleData.json";
+import { useLoaderData } from '@remix-run/react';
+import ArticleView from '~/components/ArticleView';
+import { translateText } from '~/utils/translate.server';
+import articleData from '~/data/articleData';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const loader = async ({ params }: any) => {
@@ -10,10 +9,20 @@ export const loader = async ({ params }: any) => {
   console.log('params', params);
   console.log('test');
 
-  const translatedTitle = await translateText(articleData.title, "mr", "en");
-  const translatedContent = await translateText(articleData.content, "mr", "en");
+  const article = articleData.find(a => a.id === Number(params.slug));
 
-  return json({ ...articleData, translatedTitle, translatedContent });
+  if (!article) {
+    throw new Response("Not Found", { status: 404 });
+  }
+
+  const translatedTitle = await translateText(article.title, 'mr', 'en');
+  const translatedContent = await translateText(
+    article.content,
+    'mr',
+    'en'
+  );
+
+  return { ...article, translatedTitle, translatedContent };
 };
 
 export default function Article() {

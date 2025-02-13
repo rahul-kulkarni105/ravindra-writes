@@ -1,13 +1,10 @@
-import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
+import articleData from '~/data/articleData';
 
 export const loader = async () => {
   // Fetch articles from your database
-  const articles = [
-    { id: 1, title: "पहिला लेख" },
-    { id: 2, title: "दुसरा लेख" },
-  ];
-  return json({ articles });
+  const articles = articleData
+  return { articles };
 };
 
 export default function Index() {
