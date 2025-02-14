@@ -1,10 +1,15 @@
 import { useState } from "react";
+import styles from '~/styles/ArticleView.css?url';
 
 interface ArticleViewProps {
   title: string;
   content: string;
   translatedTitle?: string;
   translatedContent?: string;
+}
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
 }
 
 export default function ArticleView({
@@ -16,12 +21,12 @@ export default function ArticleView({
   const [isMarathi, setIsMarathi] = useState(true);
 
   return (
-    <div>
-      <button onClick={() => setIsMarathi(!isMarathi)}>
+    <div className="article-container">
+      <button className="toggle-button" onClick={() => setIsMarathi(!isMarathi)}>
         {isMarathi ? "View in English" : "मराठीत पहा"}
       </button>
-      <h1>{isMarathi ? title : translatedTitle}</h1>
-      <p>{isMarathi ? content : translatedContent}</p>
+      <h1 className="article-title">{isMarathi ? title : translatedTitle}</h1>
+      <p className="article-content">{isMarathi ? content : translatedContent}</p>
     </div>
   );
 }
